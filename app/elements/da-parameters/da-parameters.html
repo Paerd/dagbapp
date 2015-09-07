@@ -13,21 +13,64 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
 <link rel="import" href="../../bower_components/paper-time-picker/paper-time-picker.html">
+<link rel="import" href="../../bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
 
 <dom-module id="da-parameters">
   <style>
     :host {
       display: block;
-      padding: 20px;
     }
 
   </style>
   <template>
-    <template is="dom-repeat" items="{{paerameters}}">
-        <h1>{{item.titel}}</h1>
-        <paper-time-picker hour="{{item.hrs}}" minute="{{item.min}}" class="groot"></paper-time-picker>
+    <template is="dom-repeat" items="{{sleep}}">
+
+      <h1>{{item.titel}}</h1>
+      <paper-time-picker hour="{{item.hrs}}" minute="{{item.min}}"></paper-time-picker>
     </template>
+
+    <template is="dom-repeat" items="{{food}}">
+      <div class="horizontal layout">
+        <h1 class="flex">{{item.titel}}</h1>
+        <paper-toggle-button checked="{{item.bool}}"></paper-toggle-button>
+      </div>
+    </template>
+
+    <h1>Mood VM</h1>
+    <template is="dom-repeat" items="{{moodvm}}">
+      <div class="horizontal layout">
+        <h1 class="flex">{{item.titel}}</h1>
+        <paper-slider min="-5" max="5" value="{{item.number}}" snaps markers pin></paper-slider>
+      </div>
+    </template>
+
+    <h1>Mood VM</h1>
+    <template is="dom-repeat" items="{{moodnm}}">
+      <div class="horizontal layout">
+        <h1 class="flex">{{item.titel}}</h1>
+        <paper-slider min="-5" max="5" value="{{item.number}}" snaps markers pin></paper-slider>
+      </div>
+    </template>
+
+    <template is="dom-repeat" items="{{drugs}}">
+      <div class="horizontal layout">
+        <h1 class="flex">{{item.titel}}</h1>
+        <paper-input type="number"></paper-input>
+      </div>
+    </template>
+
+    <h1>Varia</h1>
+    <paper-input value="{{varia}}"></paper-input>
+
+
+    <paper-fab icon="add"></paper-fab>
+
+
   </template>
+
+
+
 </dom-module>
 <script>
 (function() {
@@ -35,13 +78,61 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     is: 'da-parameters',
 
     properties: {
-      paerameters: {
+      sleep: {
         type: Array,
         value: [  
           {titel: "Opgestaan", hrs: 0, min: 0},
           {titel: "In bed", hrs: 0, min: 0},
           {titel: "In slaap", hrs: 0, min: 0}
         ],
+        notify: true
+      },
+
+      food: {
+        type: Array,
+        value: [  
+          {titel: "Breakfast", bool: false},
+          {titel: "Lunch", bool: false},
+          {titel: "Diner", bool: false},
+          {titel: "Midnight Snack", bool: false}
+        ],
+        notify: true
+      },
+
+      moodvm: {
+        type: Array,
+        value: [  
+          {titel: "Energy", number: 0},
+          {titel: "Mood", number: 0},
+          {titel: "Alcohol", number: 0},
+          {titel: "Drugs", number: 0}
+        ],
+        notify: true
+      },
+
+      moodnm: {
+        type: Array,
+        value: [  
+          {titel: "Energy", number: 0},
+          {titel: "Mood", number: 0},
+          {titel: "Alcohol", number: 0},
+          {titel: "Drugs", number: 0}
+        ],
+        notify: true
+      },
+
+      drugs: {
+        type: Array,
+        value: [  
+          {titel: "Alcohol", number: 0},
+          {titel: "Drugs", number: 0}
+        ],
+        notify: true
+      },
+     
+      varia: {
+        type: String,
+        value: "",
         notify: true
       }
     }
