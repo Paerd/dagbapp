@@ -20,52 +20,99 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <style>
     :host {
       display: block;
+
     }
+
+
+  .canvas {
+    background-color: black;
+    color: white; 
+    height: 100%;
+    @apply(--layout-vertical);
+    @apply(--layout-center-center);
+    text-align: center;
+  }
+
+
+  neon-animated-pages {
+    height: 100%;
+  }
+
+
 
   </style>
   <template>
-    <template is="dom-repeat" items="{{sleep}}">
 
-      <h1>{{item.titel}}</h1>
-      <paper-time-picker hour="{{item.hrs}}" minute="{{item.min}}"></paper-time-picker>
-    </template>
+  <neon-animated-pages id="pages" selected="{{selected}}"  class="color" entry-animation="{{entryAnimation}}" exit-animation="{{exitAnimation}}">
 
-    <template is="dom-repeat" items="{{food}}">
-      <div class="horizontal layout">
-        <h1 class="flex">{{item.titel}}</h1>
-        <paper-toggle-button checked="{{item.bool}}"></paper-toggle-button>
+
+    <neon-animatable>
+      <template is="dom-repeat" items="{{sleep}}">
+        <div class="canvas">
+          <h1>{{item.titel}}</h1>
+          <paper-time-picker hour="{{item.hrs}}" minute="{{item.min}}"></paper-time-picker>
+        </div>
+      </template>
+    </neon-animatable>
+
+
+    <neon-animatable>
+      <div class="canvas">
+      <template is="dom-repeat" items="{{food}}">
+        <div class="horizontal layout">
+          <h1 class="flex">{{item.titel}}</h1>
+          <paper-toggle-button checked="{{item.bool}}"></paper-toggle-button>
       </div>
     </template>
 
-    <h1>Mood VM</h1>
-    <template is="dom-repeat" items="{{moodvm}}">
-      <div class="horizontal layout">
-        <h1 class="flex">{{item.titel}}</h1>
-        <paper-slider min="-5" max="5" value="{{item.number}}" snaps markers pin></paper-slider>
+
+    </div>
+    </neon-animatable>
+
+    <neon-animatable>
+      <div class="canvas">
+
+        <h1>Mood VM</h1>
+        <template is="dom-repeat" items="{{moodvm}}">
+          <div class="horizontal layout">
+            <h1 class="flex">{{item.titel}}</h1>
+            <paper-slider min="-5" max="5" value="{{item.number}}" snaps markers pin></paper-slider>
+          </div>
+        </template>
+
       </div>
-    </template>
+    </neon-animatable>
 
-    <h1>Mood VM</h1>
-    <template is="dom-repeat" items="{{moodnm}}">
-      <div class="horizontal layout">
-        <h1 class="flex">{{item.titel}}</h1>
-        <paper-slider min="-5" max="5" value="{{item.number}}" snaps markers pin></paper-slider>
+    <neon-animatable>
+      <div class="canvas">
+          <h1>Mood VM</h1>
+          <template is="dom-repeat" items="{{moodnm}}">
+            <div class="horizontal layout">
+              <h1 class="flex">{{item.titel}}</h1>
+              <paper-slider min="-5" max="5" value="{{item.number}}" snaps markers pin></paper-slider>
+            </div>
+          </template>
+
       </div>
-    </template>
+    </neon-animatable>
 
-    <template is="dom-repeat" items="{{drugs}}">
-      <div class="horizontal layout">
-        <h1 class="flex">{{item.titel}}</h1>
-        <paper-input type="number"></paper-input>
+    <neon-animatable>
+      <div class="canvas">
+      <template is="dom-repeat" items="{{drugs}}">
+        <div class="horizontal layout">
+          <h1 class="flex">{{item.titel}}</h1>
+          <paper-input type="number"></paper-input>
+        </div>
+      </template>
+
+      <h1>Varia</h1>
+      <paper-input value="{{varia}}"></paper-input>
+
+
+      <paper-fab icon="add"></paper-fab>
       </div>
-    </template>
-
-    <h1>Varia</h1>
-    <paper-input value="{{varia}}"></paper-input>
-
-
-    <paper-fab icon="add"></paper-fab>
-
+    </neon-animatable>
+    </neon-animated-pages>
 
   </template>
 
@@ -76,6 +123,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 (function() {
   Polymer({
     is: 'da-parameters',
+
+    behaviors: [
+        Polymer.NeonAnimatableBehavior
+    ],
 
     properties: {
       sleep: {
@@ -135,7 +186,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         value: "",
         notify: true
       }
+    },
+
+
+    ready: function() {
+      this.selected = 0;
+        this.entryAnimation = 'slide-from-right-animation';
+        this.exitAnimation = 'slide-left-animation';
     }
+
+
+
   });
 })();
 </script>
